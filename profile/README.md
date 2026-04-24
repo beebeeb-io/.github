@@ -35,20 +35,60 @@ Every client app is open source. Read the code, compile it yourself, audit our c
 
 ### How the encryption works
 
-```
-Your device                         Our servers
-┌──────────────┐                    ┌──────────────┐
-│ password     │                    │              │
-│   ↓ Argon2id │                    │  encrypted   │
-│ master key   │  ── AES-256-GCM ──→  blobs only  │
-│   ↓ HKDF     │      TLS 1.3      │              │
-│ per-file key │                    │  we see      │
-│   ↓ encrypt  │                    │  nothing     │
-│ ciphertext   │                    │              │
-└──────────────┘                    └──────────────┘
+```mermaid
+flowchart LR
+    subgraph device["Your device"]
+        A[Password] -->|Argon2id| B[Master key]
+        B -->|HKDF + file ID| C[Per-file key]
+        C -->|AES-256-GCM| D[Ciphertext]
+    end
+
+    D -->|TLS 1.3| E
+
+    subgraph server["Our servers"]
+        E[Encrypted blobs]
+        F[We see nothing]
+    end
+
+    style device fill:#fef7e0,stroke:#b8860b,color:#2a2520
+    style server fill:#f5f2ed,stroke:#e6e0d6,color:#7d7770
+    style B fill:#f5b800,stroke:#b8860b,color:#2a2520
+    style E fill:#e6e0d6,stroke:#d9d1c4,color:#7d7770
 ```
 
 No backdoors. No key escrow. No master decryption capability. If we are subpoenaed, we hand over encrypted garbage — and that's by design.
+
+### Architecture
+
+```mermaid
+graph TB
+    subgraph clients["Open-source clients"]
+        WEB[Web app<br/>React + WASM]
+        MOB[Mobile<br/>React Native]
+        CLI[CLI<br/>bb]
+        DSK[Desktop sync<br/>Native + Rust]
+        RCL[rclone<br/>Go]
+    end
+
+    subgraph core["Crypto core · Rust"]
+        CORE[beebeeb-core<br/>AES-256-GCM · Argon2id · HKDF]
+    end
+
+    subgraph infra["EU infrastructure"]
+        API[API server<br/>Rust + Axum]
+        DB[(PostgreSQL)]
+        S3[(Object storage<br/>Hetzner DE · Leaseweb NL)]
+    end
+
+    WEB & MOB & CLI & DSK & RCL --> CORE
+    CORE -->|encrypted| API
+    API --> DB
+    API --> S3
+
+    style core fill:#fef7e0,stroke:#b8860b
+    style infra fill:#f5f2ed,stroke:#e6e0d6
+    style clients fill:#fff,stroke:#e6e0d6
+```
 
 ### The four promises
 
