@@ -77,7 +77,7 @@ graph TB
     subgraph infra["EU infrastructure"]
         API[API server<br/>Rust + Axum]
         DB[(PostgreSQL)]
-        S3[(Object storage<br/>Hetzner DE · Leaseweb NL)]
+        S3[(Object storage<br/>Falkenstein, Germany)]
     end
 
     WEB & MOB & CLI & DSK & RCL --> CORE
@@ -93,7 +93,7 @@ graph TB
 ### The four promises
 
 1. **Zero-knowledge** — We will never add a backdoor, key escrow, or decryption capability
-2. **EU-only infrastructure** — Hetzner (Germany), Leaseweb (Netherlands). No US subprocessors
+2. **EU-only infrastructure** — stored in Falkenstein, Germany, under EU law. No US subprocessors
 3. **No telemetry** — No analytics SDKs, no crash reports unless you opt in
 4. **Acquired? Open-sourced** — If we're ever acquired or shut down, all client apps become public domain within 30 days
 
