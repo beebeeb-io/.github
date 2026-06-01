@@ -37,7 +37,7 @@ Every client app is open source. Read the code, compile it yourself, audit our c
 | **[mobile](https://github.com/beebeeb-io/mobile)** | iOS and Android app | TypeScript |
 | **[desktop](https://github.com/beebeeb-io/desktop)** | Desktop sync for macOS, Windows, and Linux | Swift / Rust |
 | **[site](https://github.com/beebeeb-io/site)** | The beebeeb.io website | Astro |
-| **[rclone-backend](https://github.com/beebeeb-io/rclone-backend)** | Rclone backend — mount your vault as a drive | Go |
+| **[rclone-backend](https://github.com/beebeeb-io/rclone-backend)** | Rclone backend — mount your vault as a drive _(experimental)_ | Go |
 
 ### How the encryption works
 
