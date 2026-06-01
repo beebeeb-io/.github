@@ -1,5 +1,5 @@
 <p align="center">
-  <strong style="font-size: 28px;">beebeeb<span>.io</span></strong>
+  <a href="https://beebeeb.io"><img src="https://beebeeb.io/assets/beebeeb-logo.png" alt="beebeeb" width="260" /></a>
 </p>
 
 <h3 align="center">Storage that can't be read — not even by us.</h3>
@@ -10,7 +10,13 @@
 </p>
 
 <p align="center">
-  <a href="https://beebeeb.io">Website</a> · <a href="https://beebeeb.io/security">Security</a> · <a href="https://beebeeb.io/docs">Docs</a> · <a href="https://beebeeb.io/pricing">Pricing</a>
+  <a href="https://beebeeb.io"><img src="https://img.shields.io/badge/website-beebeeb.io-f5b800.svg" alt="Website" /></a>
+  &nbsp;
+  <a href="https://github.com/beebeeb-io/.github/blob/main/SECURITY.md"><img src="https://img.shields.io/badge/security-policy-555.svg" alt="Security policy" /></a>
+</p>
+
+<p align="center">
+  <a href="https://beebeeb.io">Website</a> &nbsp;·&nbsp; <a href="https://beebeeb.io/security">Security</a> &nbsp;·&nbsp; <a href="https://beebeeb.io/docs">Docs</a> &nbsp;·&nbsp; <a href="https://beebeeb.io/pricing">Pricing</a>
 </p>
 
 ---
@@ -58,44 +64,12 @@ flowchart LR
 
 No backdoors. No key escrow. No master decryption capability. If we are subpoenaed, we hand over encrypted garbage — and that's by design.
 
-### Architecture
-
-```mermaid
-graph TB
-    subgraph clients["Open-source clients"]
-        WEB[Web app<br/>React + WASM]
-        MOB[Mobile<br/>React Native]
-        CLI[CLI<br/>bb]
-        DSK[Desktop sync<br/>Native + Rust]
-        RCL[rclone<br/>Go]
-    end
-
-    subgraph core["Crypto core · Rust"]
-        CORE[beebeeb-core<br/>AES-256-GCM · Argon2id · HKDF]
-    end
-
-    subgraph infra["EU infrastructure"]
-        API[API server<br/>Rust + Axum]
-        DB[(PostgreSQL)]
-        S3[(Object storage<br/>Falkenstein, Germany)]
-    end
-
-    WEB & MOB & CLI & DSK & RCL --> CORE
-    CORE -->|encrypted| API
-    API --> DB
-    API --> S3
-
-    style core fill:#fef7e0,stroke:#b8860b
-    style infra fill:#f5f2ed,stroke:#e6e0d6
-    style clients fill:#fff,stroke:#e6e0d6
-```
-
 ### The four promises
 
-1. **Zero-knowledge** — We will never add a backdoor, key escrow, or decryption capability
-2. **EU-only infrastructure** — stored in Falkenstein, Germany, under EU law. No US subprocessors
-3. **No telemetry** — No analytics SDKs, no crash reports unless you opt in
-4. **Acquired? Open-sourced** — If we're ever acquired or shut down, all client apps become public domain within 30 days
+1. **Zero-knowledge** — We will never add a backdoor, key escrow, or decryption capability.
+2. **EU-only infrastructure** — stored in Falkenstein, Germany, under EU law. No US subprocessors.
+3. **No telemetry** — No analytics SDKs, no crash reports unless you opt in.
+4. **Acquired? Open-sourced** — If we're ever acquired or shut down, all client apps become public domain within 30 days.
 
 ### Who we are
 
@@ -106,5 +80,5 @@ Two brothers from Wijchen, Netherlands. We built the storage product every Europ
 ---
 
 <p align="center">
-  <a href="https://beebeeb.io/bug-bounty">Bug bounty</a> · <a href="https://beebeeb.io/careers">Careers</a> · <a href="https://beebeeb.io/status">Status</a> · <a href="mailto:contact@beebeeb.io">Contact</a>
+  <a href="https://beebeeb.io/bug-bounty">Bug bounty</a> &nbsp;·&nbsp; <a href="https://status.beebeeb.io">Status</a> &nbsp;·&nbsp; <a href="mailto:contact@beebeeb.io">Contact</a>
 </p>
