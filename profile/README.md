@@ -27,6 +27,14 @@ Beebeeb encrypts your files **on your device** before they leave it. Our servers
 
 Every client app is open source. Read the code, compile it yourself, audit our cryptography. We earn trust — we don't ask for it.
 
+### How this is built
+
+Beebeeb is built by two founders working with AI coding agents. The agents write most of the code;
+we specify the work, review every diff, and merge it ourselves — which is why the public history
+shows one human author and some very large days. The cryptography is open source and has been
+reviewed in house; it has **not** yet undergone an external audit. We would rather tell you
+that than have you find it.
+
 ### Repositories
 
 | Repository | What it does | Language |
