@@ -36,7 +36,6 @@ Every client app is open source. Read the code, compile it yourself, audit our c
 | **[cli](https://github.com/beebeeb-io/cli)** | `bb` — your vault from the terminal | Rust |
 | **[mobile](https://github.com/beebeeb-io/mobile)** | iOS and Android app | TypeScript |
 | **[desktop](https://github.com/beebeeb-io/desktop)** | Desktop sync for macOS, Windows, and Linux | Swift / Rust |
-| **[site](https://github.com/beebeeb-io/site)** | The beebeeb.io website | Astro |
 | **[rclone-backend](https://github.com/beebeeb-io/rclone-backend)** | Rclone backend — mount your vault as a drive _(experimental)_ | Go |
 
 ### How the encryption works
@@ -44,10 +43,13 @@ Every client app is open source. Read the code, compile it yourself, audit our c
 ```mermaid
 flowchart LR
     subgraph device["Your device"]
-        A[Password] -->|Argon2id| B[Master key]
+        R[Recovery phrase<br/>128-bit entropy] -->|Argon2id| B[Master key]
+        P[Password] -->|wraps, on this device| B
         B -->|HKDF + file ID| C[Per-file key]
         C -->|AES-256-GCM| D[Ciphertext]
     end
+
+    P -->|OPAQUE login| E
 
     D -->|TLS 1.3| E
 
@@ -62,6 +64,8 @@ flowchart LR
     style E fill:#e6e0d6,stroke:#d9d1c4,color:#7d7770
 ```
 
+The recovery phrase is the master secret: the master key is derived from it, not from your password. Your password signs you in through OPAQUE, so the server never learns it, and it locks the master key on your device. If you lose both your password and your recovery phrase, the data is gone.
+
 No backdoors. No key escrow. No master decryption capability. If we are subpoenaed, we hand over encrypted garbage — and that's by design.
 
 ### The four promises
@@ -74,6 +78,8 @@ No backdoors. No key escrow. No master decryption capability. If we are subpoena
 ### Who we are
 
 Two brothers from Wijchen, Netherlands. We built the storage product every European SMB needs but nobody was making honestly.
+
+Beebeeb is engineered with AI coding agents under our review; not yet externally audited. Every commit is merged by one of us, and the agents' `Co-Authored-By` trailers stay in the history.
 
 **Initlabs B.V.** · KvK 95157565 · Wijchen, Netherlands · Bootstrapped
 
