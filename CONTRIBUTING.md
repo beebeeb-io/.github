@@ -4,35 +4,45 @@ Thank you for your interest in contributing to Beebeeb. This document covers the
 
 ## Getting started
 
+### What is open source
+
+The product clients are public repositories: [core](https://github.com/beebeeb-io/core), [cli](https://github.com/beebeeb-io/cli), [web](https://github.com/beebeeb-io/web), [mobile](https://github.com/beebeeb-io/mobile), and [desktop](https://github.com/beebeeb-io/desktop). The API server, the marketing site, and our marketing material are **not** open source.
+
+That has a practical consequence: you can build, type-check, and test every client from a single clone, but you cannot run the full stack (client plus API server) yourself. Signed-in, full-stack testing happens on the maintainer side, against an internal API server, before a change is merged.
+
 ### Prerequisites
 
-- **Rust** (latest stable) --- for `core`, `cli`, `server`, and `desktop`
-- **Bun** --- for `web`, `mobile`, and `site` (not npm, not pnpm)
-- **Docker** and **Docker Compose** --- for local development services
-- **PostgreSQL 17** --- runs via docker-compose on port 5434
+- **Rust** (the toolchain pinned in each repo's `rust-toolchain.toml`) --- for `core`, `cli`, and `desktop`
+- **Bun** --- for `web`, `mobile`, and `desktop` (not npm, not pnpm)
 
-### Local development setup
+### Build and test a single repository
 
-```sh
-# Start the database
-docker compose up -d postgres
-
-# Rust projects
-cd repos/core && cargo test        # Run the crypto test suite
-cd repos/server && cargo run       # API server on localhost:3001
-
-# TypeScript projects
-cd repos/web && bun install && bun dev    # Web client on localhost:5173
-cd repos/site && bun install && bun dev   # Marketing site on localhost:4321
-```
-
-### Full stack (Docker Compose)
+Every command below runs inside one clone. Nothing needs a sibling checkout.
 
 ```sh
-docker compose -f docker-compose.dev.yml up --build
+# core: the Rust crypto library
+git clone https://github.com/beebeeb-io/core.git && cd core
+cargo test --workspace
+
+# cli: the bb command-line tool
+git clone https://github.com/beebeeb-io/cli.git && cd cli
+cargo build && cargo test
+
+# web: the browser client
+git clone https://github.com/beebeeb-io/web.git && cd web
+bun install && bunx tsc --noEmit && bun test && bun run build
+
+# mobile: the iOS and Android app
+git clone https://github.com/beebeeb-io/mobile.git && cd mobile
+bun install && bunx tsc --noEmit
+
+# desktop: the Tauri desktop client
+git clone https://github.com/beebeeb-io/desktop.git && cd desktop
+bun install && bun run build
+cargo check --manifest-path src-tauri/Cargo.toml
 ```
 
-This starts Postgres, the API server, and the web client together.
+See the `README.md` and `CONTRIBUTING.md` in each repository for platform prerequisites and the full check list.
 
 ## Code style
 
@@ -47,7 +57,7 @@ This starts Postgres, the API server, and the web client together.
 
 - Use TypeScript strict mode.
 - Follow the existing project conventions (check the repo's own linting config).
-- Use Tailwind 4 for styling. No CSS-in-JS, no CSS modules.
+- Follow the styling approach the repo already uses (for example, `web` uses Tailwind 4). Do not introduce a new styling system.
 - Use `bun` as the package manager. Lock files should be committed.
 
 ### General
