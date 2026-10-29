@@ -29,11 +29,15 @@ Every client app is open source. Read the code, compile it yourself, audit our c
 
 ### How this is built
 
-Beebeeb is built by two founders working with AI coding agents. The agents write most of the code;
-we specify the work, review every diff, and merge it ourselves — which is why the public history
-shows one human author and some very large days. The cryptography is open source and has been
-reviewed in house; it has **not** yet undergone an external audit. We would rather tell you
-that than have you find it.
+We are two founders, and we build Beebeeb with AI coding agents. The agents write most of the
+code; we specify the work, review every diff, run the tests and decide what ships. Every commit in
+our public repositories is merged by one of us, and the history is public, which is why it shows
+one author and some very large days.
+
+Beebeeb has not had an independent security audit yet. The web, desktop, iOS and CLI apps and the
+encryption core are open source, so you can review the code yourself; the server is closed source.
+Beebeeb has no investors and is paid for from our own savings and income, and so far that money has
+gone into building Beebeeb, not into an audit. We understand if you want an audit before you trust us.
 
 ### Repositories
 
